@@ -9,30 +9,51 @@ import SwiftUI
 
 struct ProductDetailView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .center, spacing: 5) {
             // NAVBAR
             NavigationBarDetailView()
                 .padding(.horizontal)
-//                .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
-            
-            // HEADER
-            HeaderDetailView()
-                .padding(.horizontal)
+                .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+            HStack {
+                 Spacer()
+            }
             
             // DETAIL TOP PART
             TopPartDetailView()
-            .padding(.horizontal)
+                .padding(.horizontal)
+                .zIndex(1)
             
             // DETAIL BOTTOM PART
-            // RATINGS + SIZES
-            // DESCRIPTION
-            // QUANTITY + FAVORITE            
-            
-            // ADD TO CART
-            
-            Spacer()
+            VStack(alignment: .center, spacing: 0) {
+                // RATINGS + SIZES
+                RatingsSizeDetailView()
+                    .padding(.top, -20)
+                    .padding(.bottom, 10)
+                // DESCRIPTION
+                ScrollView(.vertical, showsIndicators: false) {
+                    Text(sampleProduct.description)
+                        .font(.system(.body, design: .rounded))
+                        .foregroundColor(.gray)
+                        .multilineTextAlignment(.leading)
+                } //: SCROLL
+                
+                // QUANTITY + FAVORITE
+                QuantityFavoriteDetailView()
+                    .padding(.vertical, 10)
+                // ADD TO CART
+                
+                AddToCartDetailView()
+                    .padding(.bottom,20)
+            }
+            .padding(.horizontal)
+            .background(
+                Color.white
+                    .clipShape(CustomShape())
+                    .padding(.top,-105)
+            )
         } //: VSTACK
-//        .ignoresSafeArea()
+        .ignoresSafeArea()
+        .zIndex(0)
         .background(
             sampleProduct.rgb
         )
